@@ -7,16 +7,14 @@ import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to={"/login"} />}></Route>
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>}></Route>
-        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>}></Route>
-        <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-        </Route>
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Navigate to={"/login"} />}></Route>
+      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>}></Route>
+      <Route path="/register" element={<PublicRoute><Register /></PublicRoute>}></Route>
+      <Route element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+      </Route>
+    </Routes>
   );
 }
 

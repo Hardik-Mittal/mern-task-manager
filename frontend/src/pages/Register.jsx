@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { AuthContext } from "../context/AuthContext";
 
 function Register() {
 
@@ -9,6 +10,7 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,8 +20,8 @@ function Register() {
                 name, email, password
             });
 
-            console.log("Registered user:", response.data);
-            navigate("/login");
+            login(response.data);
+            navigate("/dashboard", { replace: true });
         }
         catch (error) {
             console.log(error.response?.data?.message || error.message);
