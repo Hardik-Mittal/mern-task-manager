@@ -4,17 +4,21 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to={"/login"} />}></Route>
-      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>}></Route>
-      <Route path="/register" element={<PublicRoute><Register /></PublicRoute>}></Route>
-      <Route element={<PrivateRoute />}>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-      </Route>
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate to={"/login"} />}></Route>
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>}></Route>
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Route>
+      </Routes>
+    </>
   );
 }
 

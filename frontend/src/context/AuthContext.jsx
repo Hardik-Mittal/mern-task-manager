@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext(null);
 
@@ -6,6 +6,17 @@ export const AuthProvider = ({ children }) => {
     const storedUser = JSON.parse(localStorage.getItem('userInfo'));
 
     const [user, setUser] = useState(storedUser);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('userInfo');
+
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+
+        setLoading(false);
+    }, []);
 
     const login = (userData) => {
         localStorage.setItem('userInfo', JSON.stringify(userData));
@@ -18,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        < AuthContext.Provider value={{ user, login, logout }} >
+        < AuthContext.Provider value={{ user, login, logout, loading }} >
             {children}
         </AuthContext.Provider >
     );

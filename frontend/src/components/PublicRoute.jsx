@@ -3,7 +3,11 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const PublicRoute = ({ children }) => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
+
+    if (loading) {
+        return <p>loading... kindly wait</p>
+    }
 
     if (user?.token)
         return <Navigate to="/dashboard" replace></Navigate>;
