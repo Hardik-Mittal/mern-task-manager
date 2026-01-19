@@ -3,9 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const storedUser = JSON.parse(localStorage.getItem('userInfo'));
-
-    const [user, setUser] = useState(storedUser);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

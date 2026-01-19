@@ -2,15 +2,18 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import { getErrorMessage } from "../utils/errorHandler";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
         try {
             const response = await api.post("/users/login", {
@@ -21,7 +24,7 @@ function Login() {
             navigate("/dashboard", { replace: true });
         }
         catch (error) {
-            console.log(error.response?.data?.message || error.message);
+            setError(getErrorMessage(error));
         }
     }
 
@@ -29,6 +32,7 @@ function Login() {
     return (
         <form onSubmit={handleSubmit}>
             <h2>Login</h2>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
             <button type="submit">Submit</button>

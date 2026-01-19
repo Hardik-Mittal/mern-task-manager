@@ -21,12 +21,17 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status == 401) {
-      localStorage.removeItem("userInfo");
-      window.location.href = "/login";
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      // Only redirect if user was authenticated (has token)
+      // Don't redirect on failed login attempts
+      if (userInfo?.token) {
+        localStorage.removeItem("userInfo");
+        window.location.href = "/login";
+      }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
